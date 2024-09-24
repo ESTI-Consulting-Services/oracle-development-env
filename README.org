@@ -1,0 +1,36 @@
+* About this Repository
+This repository contains shell scripts and a docker compose file for running a containerized Oracle database and APEX stack
+
+These scripts build a docker image with Oracle 19C with APEX 23.4
+** Pre-requisites
+*** Docker desktop
+1. Install docker dekstop for Windows
+2. Resources -> WSL integration -> Enable integration with whatever distro you are using (Ubuntu for me)
+3. In WSL
+   + sudo groupadd docker
+     sudo usermod -aG docker $USER
+     newgrp docker
+
+*** Oracle database
+1. Download oracle db binary
+   + https://www.oracle.com/ca-en/database/technologies/oracle-database-software-downloads.html#db_ee
+   + Oracle Database 19c for Linux x86-64
+   + ZIP
+   + Place in project root
+
+*** Git
+1. Make sure your git credentials are setup
+
+** Build Oracle DB image
+1. ./buildDbImage.sh
+
+** ORDS
+1. https://container-registry.oracle.com/ords/ocr/ba/database/ords-developer
+2. Accept the Terms and conditions
+3. ./configORDS.sh
+   + This configures the ORDS container with the correct connection string
+4. default creds
+   internal
+   ADMIN
+   Welcome_1
+
