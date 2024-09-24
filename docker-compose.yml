@@ -1,0 +1,40 @@
+version: '3'
+services:
+      
+  oracle-db:
+    image: oracle19c:1.0.0
+    container_name: oracle-dev-db
+    environment:
+      - ORACLE_SID=DEV19C
+      - ORACLE_PDB=DEVPDB
+      - ORACLE_PWD=Development19C
+      - ORACLE_CHARACTERSET=AL32UTF8
+    ports:
+      - "8521:1521"   # Oracle DB port
+      - "8500:5500"   # Oracle EM Express port
+    networks:
+      - oracle_network
+
+  ords:
+    image: container-registry.oracle.com/database/ords-developer:23.4.0
+    container_name: ords-dev
+    restart: always
+    depends_on:
+      - oracle-db
+    ports:
+      - "8181:8181"   # ORDS listening port
+    volumes:
+      - ./ords_secrets:/opt/oracle/variables
+    networks:
+      - oracle_network
+
+
+volumes:
+  oracle-data:
+    driver: local
+  ords-config:
+    driver: local
+
+networks:
+  oracle_network:
+    driver: bridge  # Default network driver
